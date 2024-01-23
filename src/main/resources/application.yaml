@@ -1,0 +1,38 @@
+server:
+    port: 8080
+
+# Logging
+logging:
+  level:
+      root: ERROR
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+spring:
+  application:
+      name: Service-3 SpringBoot
+  # kafka:
+  #     consumer:
+  #         bootstrap-servers: http://localhost:9092
+  #         key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  #         value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  #         group-id: group-1
+  #         auto-offset-reset: earliest
+tracing:
+  url: http://34.173.206.57:4318/v1/traces
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  otlp:
+    metrics:
+      export:
+        url: http://34.173.206.57:4318/v1/metrics
+        step: 10s
+    tracing:
+      endpoint: http://34.173.206.57:4318/v1/traces
+  tracing:
+    sampling:
+      probability: 1.0
+
